@@ -1,155 +1,106 @@
-const ImgUpload =({
-  onChange,
-  src
-})=>
-  <label htmlFor="photo-upload" className="custom-file-upload fas">
-    <div className="img-wrap img-upload" >
-      <img for="photo-upload" src={src}/>
-    </div>
-    <input id="photo-upload" type="file" onChange={onChange}/> 
-  </label>
 
+// set variables
+let currentSong = 0, maxSong, playing = false, position = 0, maxPosition = 1800, pause = false;
 
-const Name =({
-  onChange,
-  value
-})=>
-  <div className="field">
-    <label htmlFor="name">
-      name:
-    </label>
-    <input 
-      id="name" 
-      type="text" 
-      onChange={onChange} 
-      maxlength="25" 
-      value={value} 
-      placeholder="Alexa" 
-      required/>
-  </div>
+// grab relevant element references
+const elements = {
+  images: document.getElementsByClassName("album-art"),
+  songs: document.getElementsByClassName("song"),
+  artists: document.getElementsByClassName("artist"),
+  play: document.getElementById("play-button"),
+  previous: document.getElementById("previous-button"),
+  next: document.getElementById("next-button"),
+  currentSong: document.getElementById("current-song"),
+  slider: document.getElementById("slider")
+}
 
-  
-const Status =({
-  onChange,
-  value
-})=>
-  <div className="field">
-    <label htmlFor="status">
-      status:
-    </label>
-    <input 
-      id="status" 
-      type="text" 
-      onChange={onChange} 
-      maxLength="35" 
-      value={value} 
-      placeholder="It's a nice day!" 
-      required/>
-  </div>
-
-
-const Profile =({
-  onSubmit,
-  src,
-  name,
-  status,
-})=>
-  <div className="card">
-    <form onSubmit={onSubmit}>
-      <h1>Profile Card</h1>
-      <label className="custom-file-upload fas">
-        <div className="img-wrap" >
-          <img for="photo-upload" src={src}/>
-        </div>
-      </label>
-      <div className="name">{name}</div>
-      <div className="status">{status}</div>
-      <button type="submit" className="edit">Edit Profile </button>
-    </form>
-  </div>
-     
-      
-const Edit =({
-  onSubmit,
-  children,
-})=>
-  <div className="card">
-    <form onSubmit={onSubmit}>
-      <h1>Profile Card</h1>
-        {children}
-      <button type="submit" className="save">Save </button>
-    </form>
-  </div>
-
-class CardProfile extends React.Component {
-  state = {
-    file: '',
-    imagePreviewUrl: 'https://github.com/OlgaKoplik/CodePen/blob/master/profile.jpg?raw=true',
-    name:'',
-    status:'',
-    active: 'edit'
+// controlling the DOM
+function next() {
+  updateDOM('remove');
+  currentSong++;
+  if (currentSong > maxSong) {
+    currentSong = 0;
   }
+  updateDOM('add');
+  elements.slider.value = 0;
+  position = 0;
+}
 
-  photoUpload = e =>{
-    e.preventDefault();
-    const reader = new FileReader();
-    const file = e.target.files[0];
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        imagePreviewUrl: reader.result
-      });
-    }
-    reader.readAsDataURL(file);
+
+function previous() {
+  updateDOM('remove');
+  currentSong--;
+  if (currentSong < 0) {
+    currentSong = maxSong;
   }
-  editName = e =>{
-    const name = e.target.value;
-    this.setState({
-      name,
-    });
-  }
-  
-  editStatus = e => {
-    const status = e.target.value;
-    this.setState({
-      status,
-    });
-  }
-  
-  handleSubmit= e =>{
-    e.preventDefault();
-    let activeP = this.state.active === 'edit' ? 'profile' : 'edit';
-    this.setState({
-      active: activeP,
-    })
-  }
-  
-  render() {
-    const {imagePreviewUrl, 
-           name, 
-           status, 
-           active} = this.state;
-    return (
-      <div>
-        {(active === 'edit')?(
-          <Edit onSubmit={this.handleSubmit}>
-            <ImgUpload onChange={this.photoUpload} src={imagePreviewUrl}/>
-            <Name onChange={this.editName} value={name}/>
-            <Status onChange={this.editStatus} value={status}/>
-          </Edit>
-        ):(
-          <Profile 
-            onSubmit={this.handleSubmit} 
-            src={imagePreviewUrl} 
-            name={name} 
-            status={status}/>)}
-        
-      </div>
-    )
+  updateDOM('add');
+  elements.slider.value = 0;
+}
+
+function updateDOM(action) {
+  elements.currentSong.innerHTML = currentSong + 1;
+  if (action === 'add') {
+    elements.images[currentSong].classList.add("active");
+    elements.songs[currentSong].classList.add("active");
+    elements.artists[currentSong].classList.add("active");
+  } else {
+    elements.images[currentSong].classList.remove("active");
+    elements.songs[currentSong].classList.remove("active");
+    elements.artists[currentSong].classList.remove("active");
   }
 }
 
-ReactDOM.render(
-  <CardProfile/>,
-  document.getElementById('root')
-)
+function playBar() {
+  if (!pause) {
+    setTimeout(function() {
+      elements.slider.value = position++;
+      if (position > maxPosition) {
+        position = 0;
+        next();
+      }
+      playBar();
+    }, 10);
+  }
+}
+
+function play() {
+  if (!playing) {
+    pause = false;
+    playBar();
+    elements.play.classList.add("pause");
+  } else {
+    pause = true;
+    elements.play.classList.remove("pause");
+  }
+  playing = !playing;
+}
+
+function sliderChange() {
+  position = elements.slider.value;
+}
+
+// initial setup
+function init() {
+  // setup first image
+  elements.images[currentSong].classList.toggle("active");
+  elements.songs[currentSong].classList.toggle("active");
+  elements.artists[currentSong].classList.toggle("active");
+  maxSong = elements.images.length - 1;
+  // event listeners for controls
+  elements.next.addEventListener("click", function() {
+    next();
+  });
+  elements.previous.addEventListener("click", function() {
+    previous();
+  });
+  elements.play.addEventListener("click", function(){
+    play();
+  });
+  elements.slider.oninput = sliderChange;
+}
+
+
+
+init();
+
+

@@ -1,63 +1,222 @@
-<section class="device">
-  <div class="device__top">
-    <img class="album-art" src="https://res.cloudinary.com/andrewcanham/image/upload/v1579132801/everything-everything.jpg" alt="album art" />
-    <img class="album-art" src="https://res.cloudinary.com/andrewcanham/image/upload/v1579132801/jamie-xx.jpg" alt="album art" />
-    <img class="album-art" src="https://res.cloudinary.com/andrewcanham/image/upload/v1579132801/gidge.jpg" alt="album art" />
-  </div>
-  <div class="device__mid">
-    <div class="info">
-      <hgroup class="info__left">
-        <h1 class="info__song">
-          <span class="song">No Reptiles</span>
-          <span class="song">Gosh</span>
-          <span class="song">Norrland</span>
-        </h1>
-        <h2 class="info__artist">
-          <span class="artist">by Everything Everything</span>
-          <span class="artist">by Jamie xx</span>
-          <span class="artist">by Gidge</span>
-        </h2>
-      </hgroup>
+<style>
+@import url(https://fonts.googleapis.com/css?family=Satisfy);
+body {
+  background: #202545;
+  margin-top: 80px;
+}
 
-      <hgroup class="info__right">
-        <h1 class="info__type">Playlist <span id="current-song">1</span> of 3</h1>
-        <h2 class="info__type-name">My faves</h2>
-      </hgroup>
-    </div>
+h1 {
+  font-family: "Satisfy", cursive;
+  color: #fff;
+  font-size: 2.5em;
+  text-align: center;
+  margin-bottom: 0;
+}
 
-  </div>
-  <div class="device__bottom">
-    <div class="progress">
-      <input id="slider" type="range" value="0" min="0" max="1800" step="1" />
+h3 {
+  font-family: "Satisfy", cursive;
+  color: #fff;
+  font-size: 1em;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+p {
+  font-family: "Satisfy", cursive;
+  font-size: 1.8em;
+  text-align: center;
+  color: #fff;
+  margin-top: 0;
+}
+
+.iPhone {
+  background: #fff;
+  border: solid 2px #c5c5c5;
+  height: 500px;
+  width: 260px;
+  border-radius: 30px;
+  position: relative;
+  margin: 0 auto;
+  box-shadow: 0 3px 5px 0 rgba(50, 50, 50, 0.25);
+  -webkit-transition: all 0.4s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  -moz-transition: all 0.4s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  transition: all 0.4s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+}
+
+.iPhoneInner {
+  background: #fff;
+  border: solid 2px #b4b4b4;
+  height: 496px;
+  width: 256px;
+  border-radius: 30px;
+  position: relative;
+  margin: 0 auto;
+  box-shadow: 0 3px 5px 0 rgba(50, 50, 50, 0.75);
+  -webkit-transition: all 0.4s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  -moz-transition: all 0.4s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  transition: all 0.4s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+}
+.iPhoneInner .circButton {
+  background: #fff;
+  border: solid 2px #3b3b3b;
+  width: 36px;
+  height: 36px;
+  position: relative;
+  margin: 0 auto;
+  border-radius: 50%;
+  top: 48px;
+  cursor: pointer;
+}
+.iPhoneInner .smallTopCirc {
+  background-color: #1f1f1f;
+  background-image: -webkit-linear-gradient(#1f1f1f, #141414);
+  background-image: linear-gradient(#1f1f1f, #141414);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  top: 6px;
+  position: relative;
+  margin: 0 auto;
+}
+.iPhoneInner .camera {
+  background-color: #1f1f1f;
+  background-image: -webkit-linear-gradient(#1f1f1f, #141414);
+  background-image: linear-gradient(#1f1f1f, #141414);
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: solid 1px #c5c5c5;
+  top: 17px;
+  left: 85px;
+}
+.iPhoneInner .oval {
+  background-color: #1f1f1f;
+  background-image: -webkit-linear-gradient(#1f1f1f, #141414);
+  background-image: linear-gradient(#1f1f1f, #141414);
+  width: 50px;
+  height: 4px;
+  top: 14px;
+  border-radius: 2px;
+  margin: 0 auto;
+  margin-bottom: -12px;
+  position: relative;
+}
+
+.iScreen {
+  position: relative;
+  width: 230px;
+  height: 400px;
+  margin: 0 auto;
+  top: 40px;
+  overflow: hidden;
+  background-color: #1f1f1f;
+  background-image: -webkit-linear-gradient(#1f1f1f, #141414);
+  background-image: linear-gradient(#1f1f1f, #141414);
+  border: solid 2px #3b3b3b;
+  -webkit-transition: all 0.4s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  -moz-transition: all 0.4s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  transition: all 0.4s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+}
+.iScreen .usman {
+  opacity: 0.8;
+}
+.iScreen .usman img {
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  -webkit-transition: all 0.6s;
+  -moz-transition: all 0.6s;
+  transition: all 0.6s;
+}
+.iScreen .usman .center {
+  display: block;
+  max-width: 140px;
+  margin: 0 auto;
+  right: 130px;
+  top: 0;
+  transition-delay: 2s;
+  -webkit-transition: all 0.6s;
+  -moz-transition: all 0.6s;
+  transition: all 0.6s;
+  position: relative;
+}
+.iScreen .showMe {
+  -webkit-transition: all 0.4s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  -moz-transition: all 0.4s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  transition: all 0.4s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  opacity: 1;
+}
+
+.turnOn {
+  -webkit-transition: all 0.4s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  -moz-transition: all 0.4s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  transition: all 0.4s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+  background: #ffa8ea;
+  border: solid 2px #d1d1d1;
+}
+
+.rotate {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.rotateBack {
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+}
+
+.noShad {
+  box-shadow: none;
+}
+
+.flip {
+  width: 260px;
+  max-width: 100%;
+  right: 0;
+  top: 0;
+  text-align: center;
+  display: block;
+  position: absolute;
+  background: #ffa8ea;
+  margin-bottom: 40px;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: "Satisfy", cursive;
+  cursor: pointer;
+  font-size: 2em;
+  top: 10px;
+  right: 10px;
+  border: solid 2px #fff;
+}
+
+</style>
+
+
+<div class="iPhone">
+  <div class="iPhoneInner">
+    <div class="camera"></div>
+    <div class="smallTopCirc"></div>
+    <div class="oval"></div>
+    <div class="iScreen">
+      <div class="usman">
+        <img src="./증명사진.jpg" />
+      </div>
     </div>
-    <div class="equaliser"></div>
-    <div class="controls">
-      <button class="controls__round-button" id="previous-button">
-        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M3.13672 5L9.5 0.5V9.5L3.13672 5ZM0.5 0.5H2.01172V9.5H0.5V0.5Z" />
-        </svg>
-        <span class="sr-only">Previous</span>
-      </button>
-      <button class="controls__round-button controls__round-button--large" id="play-button">
-        <div class="play">
-          <svg class="controls__play" width="14" height="18" viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0.0195312 0.269531L13.7305 9L0.0195312 17.7305V0.269531Z"/>
-          </svg>
-          <span class="sr-only">Play</span>
-        </div>
-        <div class="pause">
-          <svg width="16" height="18" viewBox="0 0 16 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10.5195 0.269531H15.5V17.7305H10.5195V0.269531ZM0.5 17.7305V0.269531H5.48047V17.7305H0.5Z" fill="#728C98"/>
-          </svg>
-          <span class="sr-only">Pause</span>
-        </div>
-      </button>
-      <button class="controls__round-button" id="next-button">
-        <svg aria-hidden="true" focusable="false" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M7.98828 0.5H9.5V9.5H7.98828V0.5ZM0.5 9.5V0.5L6.86328 5L0.5 9.5Z" />
-        </svg>
-        <span class="sr-only">Next</span>
-      </button>
-    </div>
+    <div class="circButton"></div>
   </div>
-</section>
+</div>
+
+<h1>사진관 나무 - Face Connected</h1>
+<br> 
+<h3>본 프로그램은 사진관 나무에서 증명사진 식별 및 과도한 후보정 작업을 판독하기 위해 <br>개발한, 솔루션 소개를 목적으로 제작되었습니다. <br> 사진관 나무의 허락 없이 무단으로 사용을 절대 금합니다.</h1>
+  <br> 
+<p>- Copyright 2024. Studio Namu all rights reserved -</p>
